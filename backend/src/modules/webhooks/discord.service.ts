@@ -104,7 +104,7 @@ export class DiscordService {
       color: colors[event] ?? 0x99aab5,
       url: repoUrl,
       timestamp: new Date().toISOString(),
-      footer: { text: 'void-webhook' },
+      footer: { text: 'Void Webhooks' },
     };
   }
 }
