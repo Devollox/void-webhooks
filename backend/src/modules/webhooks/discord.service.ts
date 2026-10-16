@@ -16,7 +16,7 @@ export class DiscordService {
   private readonly username: string;
 
   constructor(private configService: ConfigService) {
-    this.username = this.configService.get('DISCORD_USERNAME', 'Void Webhook');
+    this.username = this.configService.get('DISCORD_USERNAME', 'Void Webhooks');
   }
 
   async sendEmbed(webhookUrl: string, embed: DiscordEmbed): Promise<boolean> {
