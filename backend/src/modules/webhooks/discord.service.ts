@@ -21,12 +21,7 @@ export class DiscordService {
 
   async sendEmbed(webhookUrl: string, embed: DiscordEmbed): Promise<boolean> {
     try {
-      const proxyBase = this.configService.get<string>('DISCORD_PROXY_URL');
-      const targetUrl = proxyBase
-        ? webhookUrl.replace('https://discord.com', proxyBase)
-        : webhookUrl;
-
-      const res = await fetch(targetUrl, {
+      const res = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
