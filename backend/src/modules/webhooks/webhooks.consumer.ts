@@ -3,7 +3,8 @@ import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
 import { RedisService } from '../../database/redis.service';
 import { DiscordService } from './discord.service';
-import { DISCORD_QUEUE, DiscordNotificationPayload } from './webhooks.service';
+import { DISCORD_QUEUE } from './webhooks.service';
+import { DiscordNotificationPayload } from './types/discord-notification';
 
 const DEDUP_TTL = 60 * 60;
 

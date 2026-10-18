@@ -6,27 +6,10 @@ import { ConfigService } from '@nestjs/config';
 import { GithubRequest } from './types/github-request.type';
 import { SubscriptionService } from '../subscription/subscription.service';
 import { GithubEventTypeSchema } from '../subscription/dto/create-subscription.schema';
-import { z } from 'zod';
+import { githubPayloadSchema } from './dto/github-payload-schema';
+import { DiscordNotificationPayload } from './types/discord-notification';
 
 export const DISCORD_QUEUE = 'discord_notifications';
-
-const githubPayloadSchema = z.object({
-  repository: z.object({
-    name: z.string(),
-    owner: z.object({
-      login: z.string(),
-    }),
-  }),
-});
-
-export type DiscordNotificationPayload = {
-  discordWebhookUrl: string;
-  owner: string;
-  repo: string;
-  event: string;
-  payload: unknown;
-  deliveryId?: string;
-};
 
 @Injectable()
 export class WebhooksService {

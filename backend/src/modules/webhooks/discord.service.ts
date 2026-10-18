@@ -1,14 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
-export type DiscordEmbed = {
-  title: string;
-  description: string;
-  color: number;
-  url?: string;
-  timestamp?: string;
-  footer?: { text: string };
-};
+import { DiscordEmbed } from './types/discord-embed';
 
 @Injectable()
 export class DiscordService {
