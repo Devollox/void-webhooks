@@ -24,6 +24,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'https://voidpresence.com',
       'https://api.voidpresence.com',
+      'https://status.voidpresence.com',
       'https://www.voidpresence.com',
     ],
     methods: [
