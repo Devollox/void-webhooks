@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     mem_limit: 180m
-    memswap_limit: 180m
+    memswap_limit: 360m
     env_file:
       - .env
     environment:
@@ -37,12 +37,15 @@ services:
       - '8080'
     networks:
       - app
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   nginx:
     image: nginx:1.27-alpine
     restart: unless-stopped
     mem_limit: 32m
-    memswap_limit: 32m
+    memswap_limit: 64m
     depends_on:
       - backend-webhook
       - frontend-webhook
@@ -62,7 +65,7 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     mem_limit: 64m
-    memswap_limit: 64m
+    memswap_limit: 184m
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -81,7 +84,7 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     mem_limit: 16m
-    memswap_limit: 16m
+    memswap_limit: 32m
     command: redis-server --maxmemory 5mb --maxmemory-policy allkeys-lru
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
