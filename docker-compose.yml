@@ -44,8 +44,8 @@ services:
   nginx:
     image: nginx:1.27-alpine
     restart: unless-stopped
-    mem_limit: 32m
-    memswap_limit: 64m
+    mem_limit: 24m
+    memswap_limit: 48m
     depends_on:
       - backend-webhook
       - frontend-webhook
@@ -64,8 +64,8 @@ services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
-    mem_limit: 64m
-    memswap_limit: 184m
+    mem_limit: 96m
+    memswap_limit: 256m
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -74,40 +74,27 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres -d void_webhook']
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      interval: 20s
+      timeout: 15s
+      retries: 5
+      start_period: 45s
     networks:
       - app
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    mem_limit: 16m
-    memswap_limit: 32m
-    command: redis-server --maxmemory 5mb --maxmemory-policy allkeys-lru
+    mem_limit: 24m
+    memswap_limit: 48m
+    command: redis-server --maxmemory 8mb --maxmemory-policy allkeys-lru
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
     networks:
       - app
-
-  # rabbitmq:
-  #   image: rabbitmq:3-alpine
-  #   restart: unless-stopped
-  #   environment:
-  #     RABBITMQ_DEFAULT_USER: void
-  #     RABBITMQ_DEFAULT_PASS: void
-  #     RABBITMQ_DEFAULT_VHOST: /
-  #   healthcheck:
-  #     test: ['CMD', 'rabbitmq-diagnostics', 'ping']
-  #     interval: 10s
-  #     timeout: 10s
-  #     retries: 10
-  #   networks:
-  #     - app
 
 volumes:
   frontend_dist:
